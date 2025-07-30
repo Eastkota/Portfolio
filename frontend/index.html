@@ -400,69 +400,74 @@
     </footer>
 
     <script>
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-                // Close mobile menu if open
-                if (mainNav.classList.contains('mobile-nav-open')) { // Changed to mobile-nav-open
-                    mainNav.classList.remove('mobile-nav-open'); // Changed to mobile-nav-open
-                    mainNav.classList.add('hidden'); // Add Tailwind's hidden class
-                }
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
             });
+            // Close mobile menu if open
+            if (mainNav.classList.contains('mobile-nav-open')) {
+                mainNav.classList.remove('mobile-nav-open');
+                mainNav.classList.add('hidden');
+            }
         });
+    });
 
-        // Form submission handling (your existing code)
-        const contactForm = document.getElementById('contactForm');
-        const formMessage = document.getElementById('formMessage');
+    // Form submission handling
+    const contactForm = document.getElementById('contactForm');
+    const formMessage = document.getElementById('formMessage');
 
-        if (contactForm) {
-            contactForm.addEventListener('submit', async function (e) {
-                e.preventDefault();
+    // IMPORTANT: Replace 'https://portfolio-t1oz.onrender.com' with the actual URL
+    // provided by Render for your backend service.
+    const backendApiUrl = 'https://portfolio-t1oz.onrender.com'; // Your Render backend URL
 
-                formMessage.textContent = 'Sending message...';
-                formMessage.className = 'mt-4 text-sm font-medium text-gray-400';
+    if (contactForm) {
+        contactForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
 
-                const formData = new FormData(contactForm);
+            formMessage.textContent = 'Sending message...';
+            formMessage.className = 'mt-4 text-sm font-medium text-gray-400';
 
-                try {
-                    const response = await fetch('/send-message/', {
-                        method: 'POST',
-                        body: formData,
-                    });
+            const formData = new FormData(contactForm);
 
-                    const result = await response.json();
+            try {
+                // Use the full backend API URL here
+                const response = await fetch(`${backendApiUrl}/send-message/`, {
+                    method: 'POST',
+                    body: formData,
+                });
 
-                    if (result.status === 'success') {
-                        formMessage.textContent = result.message;
-                        formMessage.className = 'mt-4 text-sm font-medium text-green-500';
-                        contactForm.reset();
-                    } else {
-                        formMessage.textContent = result.message || 'An error occurred. Please try again.';
-                        formMessage.className = 'mt-4 text-sm font-medium text-red-500';
-                    }
-                } catch (error) {
-                    console.error('Error submitting form:', error);
-                    formMessage.textContent = 'Network error. Please try again later.';
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    formMessage.textContent = result.message;
+                    formMessage.className = 'mt-4 text-sm font-medium text-green-500';
+                    contactForm.reset();
+                } else {
+                    formMessage.textContent = result.message || 'An error occurred. Please try again.';
                     formMessage.className = 'mt-4 text-sm font-medium text-red-500';
                 }
-            });
-        }
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                formMessage.textContent = 'Network error. Please try again later.';
+                formMessage.className = 'mt-4 text-sm font-medium text-red-500';
+            }
+        });
+    }
 
-        // Mobile menu toggle
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mainNav = document.getElementById('main-nav');
+    // Mobile menu toggle
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mainNav = document.getElementById('main-nav');
 
-        if (mobileMenuButton && mainNav) {
-            mobileMenuButton.addEventListener('click', () => {
-                mainNav.classList.toggle('hidden'); // Toggles Tailwind's hidden class
-                mainNav.classList.toggle('mobile-nav-open'); // Toggles our custom open class
-            });
-        }
-    </script>
+    if (mobileMenuButton && mainNav) {
+        mobileMenuButton.addEventListener('click', () => {
+            mainNav.classList.toggle('hidden'); // Toggles Tailwind's hidden class
+            mainNav.classList.toggle('mobile-nav-open'); // Toggles our custom open class
+        });
+    }
+</script>
 </body>
 
 </html>
