@@ -7,6 +7,7 @@
     <title>My Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -89,8 +90,10 @@
         @media (max-width: 767px) {
             /* By default, the main-nav will be hidden on small screens due to Tailwind's 'hidden' class */
             /* We only define what happens when it IS shown */
-            .mobile-nav-open { /* Renamed for clarity */
-                display: flex !important; /* Use !important to ensure it overrides Tailwind's hidden if needed */
+            .mobile-nav-open {
+                /* Renamed for clarity */
+                display: flex !important;
+                /* Use !important to ensure it overrides Tailwind's hidden if needed */
                 flex-direction: column;
                 width: 100%;
                 position: absolute;
@@ -134,6 +137,9 @@
                 </li>
                 <li><a href="#projects"
                         class="text-lg text-gray-300 hover:text-teal-400 font-medium transition-colors duration-300 rounded-md p-2">Projects</a>
+                </li>
+                <li><a href="#testimonials"
+                        class="text-lg text-gray-300 hover:text-teal-400 font-medium transition-colors duration-300 rounded-md p-2">Testimonials</a>
                 </li>
                 <li><a href="#contact"
                         class="text-lg text-gray-300 hover:text-teal-400 font-medium transition-colors duration-300 rounded-md p-2">Contact</a>
@@ -196,10 +202,11 @@
                             <span
                                 class="bg-indigo-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium shadow-md">Django</span>
                             <span
-                                class="bg-indigo-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium shadow-md">Advance Excel</span>
+                                class="bg-indigo-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium shadow-md">Advance
+                                Excel</span>
                             <span
                                 class="bg-indigo-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium shadow-md">PHP</span>
-                            <span    
+                            <span
                                 class="bg-indigo-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium shadow-md">Laravel</span>
                             <span
                                 class="bg-yellow-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium shadow-md">HTML5</span>
@@ -209,9 +216,11 @@
                                 class="bg-sky-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium shadow-md">Tailwind
                                 CSS</span>
                             <span
-                                class="bg-pink-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium shadow-md">Power BI</span>
+                                class="bg-pink-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium shadow-md">Power
+                                BI</span>
                             <span
-                                class="bg-pink-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium shadow-md">Logo & CV Design</span>
+                                class="bg-pink-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium shadow-md">Logo
+                                & CV Design</span>
                             <span
                                 class="bg-gray-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium shadow-md">Git</span>
                         </div>
@@ -226,12 +235,13 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <div
                         class="bg-gray-900 rounded-lg shadow-xl overflow-hidden border border-gray-700 transform transition-transform duration-300 hover:scale-105">
-                        <img src="images/gis.webp" alt="Project 1"
-                            class="w-full h-48 object-cover bg-white">
+                        <img src="images/gis.webp" alt="Project 1" class="w-full h-48 object-cover bg-white">
                         <div class="p-6">
                             <h3 class="text-xl sm:text-2xl font-semibold text-white mb-3">Geo-Hazard System</h3>
-                            <p class="text-gray-400 text-sm sm:text-base mb-4">The system build with FastAPI and GraphQL Strawberry 
-                                was to maintain the inventory of landslide and share public about earthquake and its magnitude around Bhutan</p>
+                            <p class="text-gray-400 text-sm sm:text-base mb-4">The system build with FastAPI and
+                                GraphQL Strawberry
+                                was to maintain the inventory of landslide and share public about earthquake and its
+                                magnitude around Bhutan</p>
                             <div class="flex flex-wrap gap-2 mb-4">
                                 <span class="bg-blue-700 text-xs px-3 py-1 rounded-full">FastAPI</span>
                                 <span class="bg-green-700 text-xs px-3 py-1 rounded-full">React</span>
@@ -248,19 +258,19 @@
                                         </path>
                                     </svg>
                                 </a>
-                                
+
                             </div>
                         </div>
                     </div>
 
                     <div
                         class="bg-gray-900 rounded-lg shadow-xl overflow-hidden border border-gray-700 transform transition-transform duration-300 hover:scale-105">
-                        <img src="images/esakor-urban.png" alt="Project 2"
-                            class="w-full h-48 object-cover">
+                        <img src="images/esakor-urban.png" alt="Project 2" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <h3 class="text-xl sm:text-2xl font-semibold text-white mb-3">Esakor-Urban</h3>
-                            <p class="text-gray-400 text-sm sm:text-base mb-4">This system is build with php with 
-                                laravel to make the ciizen of Bhutan digitally and easily accessible over their lands all over the country in urban areas.</p>
+                            <p class="text-gray-400 text-sm sm:text-base mb-4">This system is build with php with
+                                laravel to make the ciizen of Bhutan digitally and easily accessible over their lands
+                                all over the country in urban areas.</p>
                             <div class="flex flex-wrap gap-2 mb-4">
                                 <span class="bg-red-700 text-xs px-3 py-1 rounded-full">PHP</span>
                                 <span class="bg-blue-700 text-xs px-3 py-1 rounded-full">Laravel</span>
@@ -277,19 +287,19 @@
                                         </path>
                                     </svg>
                                 </a>
-                                
+
                             </div>
                         </div>
                     </div>
 
                     <div
                         class="bg-gray-900 rounded-lg shadow-xl overflow-hidden border border-gray-700 transform transition-transform duration-300 hover:scale-105">
-                        <img src="images/esakor-urban.png" alt="Project 3"
-                            class="w-full h-48 object-cover">
+                        <img src="images/esakor-urban.png" alt="Project 3" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <h3 class="text-xl sm:text-2xl font-semibold text-white mb-3">Esakor-Rural</h3>
-                            <p class="text-gray-400 text-sm sm:text-base mb-4">This system is build with php with 
-                                laravel to make the ciizen of Bhutan digitally and easily accessible over their lands all over the country in rural areas</p>
+                            <p class="text-gray-400 text-sm sm:text-base mb-4">This system is build with php with
+                                laravel to make the ciizen of Bhutan digitally and easily accessible over their lands
+                                all over the country in rural areas</p>
                             <div class="flex flex-wrap gap-2 mb-4">
                                 <span class="bg-red-700 text-xs px-3 py-1 rounded-full">PHP</span>
                                 <span class="bg-blue-700 text-xs px-3 py-1 rounded-full">Laravel</span>
@@ -306,18 +316,20 @@
                                         </path>
                                     </svg>
                                 </a>
-                                
+
                             </div>
                         </div>
                     </div>
 
                     <div
                         class="bg-gray-900 rounded-lg shadow-xl overflow-hidden border border-gray-700 transform transition-transform duration-300 hover:scale-105">
-                        <img src="images/educare-logo.jpeg" alt="Project 3"
-                            class="w-full h-48 object-cover">
+                        <img src="images/educare-logo.jpeg" alt="Project 3" class="w-full h-48 object-cover">
                         <div class="p-6">
-                            <h3 class="text-xl sm:text-2xl font-semibold text-white mb-3">Educare Skill(Game Development)</h3>
-                            <p class="text-gray-400 text-sm sm:text-base mb-4">This system contains various games that aims to help young student of Bhutan learns their national language(Dzongkha) through entertainments</p>
+                            <h3 class="text-xl sm:text-2xl font-semibold text-white mb-3">Educare Skill(Game
+                                Development)</h3>
+                            <p class="text-gray-400 text-sm sm:text-base mb-4">This system contains various games that
+                                aims to help young student of Bhutan learns their national language(Dzongkha) through
+                                entertainments</p>
                             <div class="flex flex-wrap gap-2 mb-4">
                                 <span class="bg-red-700 text-xs px-3 py-1 rounded-full">C#</span>
                                 <span class="bg-blue-700 text-xs px-3 py-1 rounded-full">Unity</span>
@@ -341,59 +353,89 @@
             </div>
         </section>
 
-        <!-- testimonial -->
+        ---
+        <section id="testimonials" class="py-16 md:py-20 bg-gray-900 px-6 sm:px-8">
+            <div class="container mx-auto max-w-4xl text-center">
+                <h2 class="text-3xl sm:text-4xl font-bold text-teal-400 mb-8 md:mb-12">What People Say</h2>
 
+                <div id="testimonial-carousel" class="relative w-full" data-carousel="slide">
+                    <div class="relative h-64 overflow-hidden rounded-lg md:h-80 lg:h-96">
+                        <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                            <div
+                                class="flex flex-col items-center justify-center p-6 bg-gray-800 rounded-lg shadow-xl h-full">
+                                <img class="w-20 h-20 rounded-full object-cover mb-4 border-2 border-teal-500"
+                                    src="https://via.placeholder.com/150/16a085/FFFFFF?text=Client1" alt="Client 1">
+                                <p class="text-lg italic text-gray-300 mb-4">"Tenzin is an exceptionally skilled
+                                    developer. His backend expertise with FastAPI is truly impressive, and he always
+                                    delivers high-quality, scalable solutions."</p>
+                                <h3 class="text-xl font-semibold text-white">- Dr. Karma Tenzin</h3>
+                                <p class="text-gray-400">Head of IT Department, ABC Corp</p>
+                            </div>
+                        </div>
+                        <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                            <div
+                                class="flex flex-col items-center justify-center p-6 bg-gray-800 rounded-lg shadow-xl h-full">
+                                <img class="w-20 h-20 rounded-full object-cover mb-4 border-2 border-teal-500"
+                                    src="https://via.placeholder.com/150/f39c12/FFFFFF?text=Client2" alt="Client 2">
+                                <p class="text-lg italic text-gray-300 mb-4">"Working with Tenzin was a pleasure. He
+                                    has a keen eye for detail and his frontend skills, especially with Tailwind CSS, made
+                                    our project visually stunning."</p>
+                                <h3 class="text-xl font-semibold text-white">- Sonam Lhamo</h3>
+                                <p class="text-gray-400">Project Manager, XYZ Solutions</p>
+                            </div>
+                        </div>
+                        <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                            <div
+                                class="flex flex-col items-center justify-center p-6 bg-gray-800 rounded-lg shadow-xl h-full">
+                                <img class="w-20 h-20 rounded-full object-cover mb-4 border-2 border-teal-500"
+                                    src="https://via.placeholder.com/150/8e44ad/FFFFFF?text=Client3" alt="Client 3">
+                                <p class="text-lg italic text-gray-300 mb-4">"Tenzin's problem-solving abilities are
+                                    top-notch. He tackled complex challenges with ease and always found elegant
+                                    solutions."</p>
+                                <h3 class="text-xl font-semibold text-white">- Pema Wangchuk</h3>
+                                <p class="text-gray-400">Founder, Tech Innovators</p>
+                            </div>
+                        </div>
+                    </div>
 
-<div id="default-carousel" class="relative w-full" data-carousel="slide">
-    <!-- Carousel wrapper -->
-    <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
-         <!-- Item 1 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="/docs/images/carousel/carousel-1.svg" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-        </div>
-        <!-- Item 2 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="/docs/images/carousel/carousel-2.svg" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-        </div>
-        <!-- Item 3 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="/docs/images/carousel/carousel-3.svg" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-        </div>
-        <!-- Item 4 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="/docs/images/carousel/carousel-4.svg" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-        </div>
-        <!-- Item 5 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="/docs/images/carousel/carousel-5.svg" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-        </div>
-    </div>
-    <!-- Slider indicators -->
-    <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
-        <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
-        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
-        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3" data-carousel-slide-to="2"></button>
-        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 4" data-carousel-slide-to="3"></button>
-        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 5" data-carousel-slide-to="4"></button>
-    </div>
-    <!-- Slider controls -->
-    <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
-        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-            <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
-            </svg>
-            <span class="sr-only">Previous</span>
-        </span>
-    </button>
-    <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
-        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-            <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
-            </svg>
-            <span class="sr-only">Next</span>
-        </span>
-    </button>
-</div>
+                    <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
+                        <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1"
+                            data-carousel-slide-to="0"></button>
+                        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 2"
+                            data-carousel-slide-to="1"></button>
+                        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3"
+                            data-carousel-slide-to="2"></button>
+                    </div>
+
+                    <button type="button"
+                        class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+                        data-carousel-prev>
+                        <span
+                            class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                            <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="M5 1 1 5l4 4" />
+                            </svg>
+                            <span class="sr-only">Previous</span>
+                        </span>
+                    </button>
+                    <button type="button"
+                        class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+                        data-carousel-next>
+                        <span
+                            class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                            <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="m1 9 4-4-4-4" />
+                            </svg>
+                            <span class="sr-only">Next</span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </section>
 
 
         <section id="contact" class="py-16 md:py-20 bg-gray-900 px-6 sm:px-8">
@@ -454,75 +496,81 @@
         <p>&copy; 2024 Tenzin Dorji. All rights reserved.</p>
     </footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+
     <script>
-    // Smooth scrolling for navigation links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
-            });
-            // Close mobile menu if open
-            if (mainNav.classList.contains('mobile-nav-open')) {
-                mainNav.classList.remove('mobile-nav-open');
-                mainNav.classList.add('hidden');
-            }
-        });
-    });
+        // Ensure the DOM is fully loaded before running scripts
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mainNav = document.getElementById('main-nav');
 
-    // Form submission handling
-    const contactForm = document.getElementById('contactForm');
-    const formMessage = document.getElementById('formMessage');
-
-    // IMPORTANT: Replace 'https://portfolio-t1oz.onrender.com' with the actual URL
-    // provided by Render for your backend service.
-    const backendApiUrl = 'https://portfolio-t1oz.onrender.com'; // Your Render backend URL
-
-    if (contactForm) {
-        contactForm.addEventListener('submit', async function (e) {
-            e.preventDefault();
-
-            formMessage.textContent = 'Sending message...';
-            formMessage.className = 'mt-4 text-sm font-medium text-gray-400';
-
-            const formData = new FormData(contactForm);
-
-            try {
-                // Use the full backend API URL here
-                const response = await fetch(`${backendApiUrl}/send-message/`, {
-                    method: 'POST',
-                    body: formData,
+            if (mobileMenuButton && mainNav) { // Check if elements exist before adding event listener
+                mobileMenuButton.addEventListener('click', () => {
+                    mainNav.classList.toggle('hidden'); // Toggles Tailwind's hidden class
+                    mainNav.classList.toggle('mobile-nav-open'); // Toggles our custom open class
                 });
+            }
 
-                const result = await response.json();
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                    // Close mobile menu if open
+                    // Ensure mainNav is defined for this part as well
+                    if (mainNav && mainNav.classList.contains('mobile-nav-open')) {
+                        mainNav.classList.remove('mobile-nav-open');
+                        mainNav.classList.add('hidden');
+                    }
+                });
+            });
 
-                if (result.status === 'success') {
-                    formMessage.textContent = result.message;
-                    formMessage.className = 'mt-4 text-sm font-medium text-green-500';
-                    contactForm.reset();
-                } else {
-                    formMessage.textContent = result.message || 'An error occurred. Please try again.';
-                    formMessage.className = 'mt-4 text-sm font-medium text-red-500';
-                }
-            } catch (error) {
-                console.error('Error submitting form:', error);
-                formMessage.textContent = 'Network error. Please try again later.';
-                formMessage.className = 'mt-4 text-sm font-medium text-red-500';
+            // Form submission handling
+            const contactForm = document.getElementById('contactForm');
+            const formMessage = document.getElementById('formMessage');
+
+            // IMPORTANT: Replace 'https://portfolio-t1oz.onrender.com' with the actual URL
+            // provided by Render for your backend service.
+            const backendApiUrl = 'https://portfolio-t1oz.onrender.com'; // Your Render backend URL
+
+            if (contactForm) { // Check if form exists
+                contactForm.addEventListener('submit', async function (e) {
+                    e.preventDefault();
+
+                    formMessage.textContent = 'Sending message...';
+                    formMessage.className = 'mt-4 text-sm font-medium text-gray-400';
+
+                    const formData = new FormData(contactForm);
+
+                    try {
+                        // Use the full backend API URL here
+                        const response = await fetch(`${backendApiUrl}/send-message/`, {
+                            method: 'POST',
+                            body: formData,
+                        });
+
+                        const result = await response.json();
+
+                        if (result.status === 'success') {
+                            formMessage.textContent = result.message;
+                            formMessage.className = 'mt-4 text-sm font-medium text-green-500';
+                            contactForm.reset();
+                        } else {
+                            formMessage.textContent = result.message || 'An error occurred. Please try again.';
+                            formMessage.className = 'mt-4 text-sm font-medium text-red-500';
+                        }
+                    } catch (error) {
+                        console.error('Error submitting form:', error);
+                        formMessage.textContent = 'Network error. Please try again later.';
+                        formMessage.className = 'mt-4 text-sm font-medium text-red-500';
+                    }
+                });
             }
         });
-    }
-
-    // Mobile menu toggle
-    const mobileMenuButton = document.getElementById('mobile-menu-button');
-    const mainNav = document.getElementById('main-nav');
-
-    if (mobileMenuButton && mainNav) {
-        mobileMenuButton.addEventListener('click', () => {
-            mainNav.classList.toggle('hidden'); // Toggles Tailwind's hidden class
-            mainNav.classList.toggle('mobile-nav-open'); // Toggles our custom open class
-        });
-    }
-</script>
+    </script>
 </body>
 
 </html>
