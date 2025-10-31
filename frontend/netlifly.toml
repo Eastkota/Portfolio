@@ -1,8 +1,0 @@
-[build.environment]
-  PYTHON_VERSION = "3.10"
-  GDAL_VERSION = "3.6.0"
-  PIP_NO_BINARY = "gdal"
-
-[build]
-  command = "sudo apt-get update && sudo apt-get install -y gdal-bin libgdal-dev && pip install -r requirements.txt && npm run build"
-  publish = "build"
