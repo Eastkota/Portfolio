@@ -39,8 +39,8 @@ app.add_middleware(
 # --- SMTP Configuration ---
 # These are YOUR email account credentials that the FastAPI app will use to LOG IN.
 # The 'From' address in the email header will be your sender email.
-YOUR_EMAIL_ACCOUNT = "eastboy.tenzin@gmail.com"  # Your actual sender email
-YOUR_EMAIL_PASSWORD = "iups cbdt acgj rjno" # Your actual email password or app-specific password
+YOUR_EMAIL_ACCOUNT = "dtenzin.nov@gmail.com"  # Your actual sender email
+YOUR_EMAIL_PASSWORD = "Galing@2000" # Your actual email password or app-specific password
 SMTP_SERVER = "smtp.gmail.com"           # Example: For Gmail. Use your email provider's SMTP server.
 SMTP_PORT = 587                          # Common port for TLS/STARTTLS
 
