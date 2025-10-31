@@ -1,0 +1,4 @@
+[build]
+  base = "frontend"      # Netlify will only look inside frontend for build
+  publish = "."          # Publish files from frontend folder
+  command = ""           # No build command for static frontend
