@@ -2,9 +2,8 @@ import os
 import smtplib
 from email.mime.text import MIMEText
 from fastapi import FastAPI, Request, Form, HTTPException, status
-# IMPORTANT: Import CORSMiddleware for cross-origin requests
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse # Use JSONResponse for API responses
+from fastapi.responses import JSONResponse 
 
 # --- IMPORTANT SECURITY NOTE ---
 # For a production application, you should NEVER hardcode sensitive information
@@ -16,35 +15,31 @@ from fastapi.responses import JSONResponse # Use JSONResponse for API responses
 app = FastAPI()
 
 # --- CORS Configuration ---
-# This middleware allows your Netlify frontend to communicate with this backend.
-# Replace 'https://tenzindevelopment.netlify.app' with your actual Netlify domain.
-# If you have a custom domain for your frontend, add it here too.
+# Allows your Netlify frontend to communicate with this backend.
 origins = [
     "https://tenzindevelopment.netlify.app", # Your Netlify frontend URL
-    # Add other origins if needed, e.g., for local development:
+    # Add other origins if needed for local testing:
     # "http://localhost",
     # "http://localhost:8000",
-    # "http://127.0.0.1:5500", # Example for VS Code Live Server
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,          # Specifies which origins are allowed
-    allow_credentials=True,         # Allows cookies to be included in cross-origin requests
-    allow_methods=["*"],            # Allows all HTTP methods (POST, GET, etc.)
-    allow_headers=["*"],            # Allows all headers
+    allow_origins=origins,          
+    allow_credentials=True,         
+    allow_methods=["*"],            
+    allow_headers=["*"],            
 )
 # --------------------------
 
 # --- SMTP Configuration ---
-# These are YOUR email account credentials that the FastAPI app will use to LOG IN.
-# The 'From' address in the email header will be your sender email.
+# Switched to Port 465 (SMTPS) for better compatibility with some hosts (like Render)
 YOUR_EMAIL_ACCOUNT = "dtenzin.nov@gmail.com"  # Your actual sender email
-YOUR_EMAIL_PASSWORD = "yhrv iivf sajq zpdl" # Your actual email password or app-specific password
-SMTP_SERVER = "smtp.gmail.com"           # Example: For Gmail. Use your email provider's SMTP server.
-SMTP_PORT = 465                         # Common port for TLS/STARTTLS
+YOUR_EMAIL_PASSWORD = "yhrv iivf sajq zpdl" # Your Gmail App Password
+SMTP_SERVER = "smtp.gmail.com"           
+SMTP_PORT = 465                          # SMTPS (SSL) port
 
-RECIPIENT_EMAIL = "dtenzin.nov@gmail.com" # The email address where messages will be sent (your email)
+RECIPIENT_EMAIL = "dtenzin.nov@gmail.com" # The email address where messages will be sent
 # --------------------------
 
 @app.post("/send-message/")
@@ -54,9 +49,7 @@ async def send_message(
     message: str = Form(...)
 ):
     """
-    Receives contact form data and attempts to send it as an email via SMTP.
-    The email will appear to come from YOUR configured email account,
-    but the 'Reply-To' will be set to the user's provided email.
+    Receives contact form data and attempts to send it as an email via SMTPS (Port 465).
     """
     # Basic validation
     if not all([name, email, message]):
@@ -69,15 +62,16 @@ async def send_message(
         # Create the email content
         msg = MIMEText(f"Name: {name}\nEmail: {email}\n\nMessage:\n{message}")
         msg["Subject"] = f"Portfolio Contact: Message from {name}"
-        msg["From"] = YOUR_EMAIL_ACCOUNT # The email will be sent from your account
+        msg["From"] = YOUR_EMAIL_ACCOUNT 
         msg["To"] = RECIPIENT_EMAIL
-        msg["Reply-To"] = email # So you can reply directly to the user
+        msg["Reply-To"] = email 
 
-        # Connect to the SMTP server using YOUR_EMAIL_ACCOUNT credentials
-        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
-            server.starttls()  # Upgrade the connection to a secure encrypted SSL/TLS connection
-            server.login(YOUR_EMAIL_ACCOUNT, YOUR_EMAIL_PASSWORD) # Log in to YOUR email account
-            server.send_message(msg) # Send the email
+        # Connect to the SMTP server using SMTPS (Port 465)
+        # We use smtplib.SMTP_SSL instead of smtplib.SMTP
+        with smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT) as server:
+            # server.starttls() is NOT needed for SMTP_SSL on port 465
+            server.login(YOUR_EMAIL_ACCOUNT, YOUR_EMAIL_PASSWORD)
+            server.send_message(msg)
 
         print(f"Email sent successfully from {name} ({email}) to {RECIPIENT_EMAIL}")
         return JSONResponse(
@@ -86,21 +80,23 @@ async def send_message(
         )
 
     except smtplib.SMTPAuthenticationError:
-        print("SMTP Authentication Error: Check YOUR email username and password. If using Gmail with 2FA, use an App Password.")
+        # This will happen if the App Password or email is incorrect
+        print("SMTP Authentication Error: Check YOUR email username and App Password.")
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED, # More specific status code
-            detail={"status": "error", "message": "Failed to send message: Authentication failed. Please contact the site administrator."}
+            status_code=status.HTTP_401_UNAUTHORIZED, 
+            detail={"status": "error", "message": "Failed to send message: Authentication failed."}
         )
     except smtplib.SMTPConnectError:
-        print(f"SMTP Connection Error: Could not connect to {SMTP_SERVER}:{SMTP_PORT}. Check server address and port.")
+        # This will happen if the network connection fails
+        print(f"SMTP Connection Error: Could not connect to {SMTP_SERVER}:{SMTP_PORT}. Check server firewall/connectivity.")
         raise HTTPException(
-            status_code=status.HTTP_503_SERVICE_UNAVAILABLE, # More specific status code
-            detail={"status": "error", "message": "Failed to send message: Could not connect to email server."}
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE, 
+            detail={"status": "error", "message": "Failed to send message: Could not connect to email server. (Check firewall)"}
         )
     except Exception as e:
+        # Catch all other exceptions, including the "Network is unreachable" error
         print(f"An unexpected error occurred: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail={"status": "error", "message": "An unexpected error occurred. Please try again later."}
+            detail={"status": "error", "message": f"An unexpected error occurred. Error detail: {e}"}
         )
-
