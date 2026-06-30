@@ -659,28 +659,26 @@
                     formMessage.textContent = 'Sending message...';
                     formMessage.className = 'mt-4 text-sm font-medium text-gray-400';
 
-                    // 1. Gather form data and convert it to a standard JavaScript object
+                    // 1. Revert to standard FormData (this matches FastAPI's Form(...) expectations)
                     const formData = new FormData(contactForm);
-                    const jsonData = Object.fromEntries(formData.entries());
 
                     try {
-                        // 2. Removed the trailing slash from the endpoint URL
-                        const response = await fetch(`${backendApiUrl}/send-message`, {
+                        // 2. Added the trailing slash back to exactly match your Python route
+                        const response = await fetch(`${backendApiUrl}/send-message/`, {
                             method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json' // 3. Added header to tell backend JSON is coming
-                            },
-                            body: JSON.stringify(jsonData), // 4. Converted data to JSON string
+                            body: formData, // No JSON.stringify, no headers needed
                         });
 
                         const result = await response.json();
 
-                        if (response.ok || result.status === 'success') {
+                        // 3. FastAPI sends errors inside a 'detail' object, let's handle that safely
+                        if (response.ok) {
                             formMessage.textContent = result.message || 'Message sent successfully!';
                             formMessage.className = 'mt-4 text-sm font-medium text-green-500';
                             contactForm.reset();
                         } else {
-                            formMessage.textContent = result.message || 'An error occurred. Please try again.';
+                            const errorMsg = result.detail?.message || result.message || 'An error occurred.';
+                            formMessage.textContent = errorMsg;
                             formMessage.className = 'mt-4 text-sm font-medium text-red-500';
                         }
                     } catch (error) {
