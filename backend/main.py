@@ -69,7 +69,7 @@ async def send_message(
         # Connect to the SMTP server using SMTPS (Port 465)
         # We use smtplib.SMTP_SSL instead of smtplib.SMTP
         with smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT) as server:
-            # server.starttls() is NOT needed for SMTP_SSL on port 465
+            server.starttls()
             server.login(YOUR_EMAIL_ACCOUNT, YOUR_EMAIL_PASSWORD)
             server.send_message(msg)
 
