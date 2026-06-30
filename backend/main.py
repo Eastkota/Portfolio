@@ -37,7 +37,7 @@ app.add_middleware(
 YOUR_EMAIL_ACCOUNT = "dtenzin.nov@gmail.com"  # Your actual sender email
 YOUR_EMAIL_PASSWORD = "yhrv iivf sajq zpdl" # Your Gmail App Password
 SMTP_SERVER = "smtp.gmail.com"           
-SMTP_PORT = 465                          # SMTPS (SSL) port
+SMTP_PORT = 587                          # SMTPS (SSL) port
 
 RECIPIENT_EMAIL = "dtenzin.nov@gmail.com" # The email address where messages will be sent
 # --------------------------
