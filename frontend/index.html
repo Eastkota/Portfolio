@@ -659,19 +659,24 @@
                     formMessage.textContent = 'Sending message...';
                     formMessage.className = 'mt-4 text-sm font-medium text-gray-400';
 
+                    // 1. Gather form data and convert it to a standard JavaScript object
                     const formData = new FormData(contactForm);
+                    const jsonData = Object.fromEntries(formData.entries());
 
                     try {
-                        // Use the full backend API URL here
-                        const response = await fetch(`${backendApiUrl}/send-message/`, {
+                        // 2. Removed the trailing slash from the endpoint URL
+                        const response = await fetch(`${backendApiUrl}/send-message`, {
                             method: 'POST',
-                            body: formData,
+                            headers: {
+                                'Content-Type': 'application/json' // 3. Added header to tell backend JSON is coming
+                            },
+                            body: JSON.stringify(jsonData), // 4. Converted data to JSON string
                         });
 
                         const result = await response.json();
 
-                        if (result.status === 'success') {
-                            formMessage.textContent = result.message;
+                        if (response.ok || result.status === 'success') {
+                            formMessage.textContent = result.message || 'Message sent successfully!';
                             formMessage.className = 'mt-4 text-sm font-medium text-green-500';
                             contactForm.reset();
                         } else {
