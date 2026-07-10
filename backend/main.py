@@ -42,6 +42,14 @@ SENDGRID_API_URL = "https://api.sendgrid.com/v3/mail/send"
 RECIPIENT_EMAIL = "dtenzin.nov@gmail.com" # The email address where messages will be sent
 # --------------------------
 
+@app.get("/debug-sendgrid/")
+async def debug_sendgrid():
+    sendgrid_api_key = os.getenv("SENDGRID_API_KEY")
+    return {
+        "sendgrid_api_key_present": bool(sendgrid_api_key),
+        "sendgrid_api_key_sample": None if not sendgrid_api_key else f"{sendgrid_api_key[:4]}...{sendgrid_api_key[-4:]}",
+    }
+
 @app.post("/send-message/")
 async def send_message(
     name: str = Form(...),
@@ -93,7 +101,12 @@ async def send_message(
             print(f"SendGrid error: {response.status_code} {response.text}")
             raise HTTPException(
                 status_code=status.HTTP_502_BAD_GATEWAY,
-                detail={"status": "error", "message": "Failed to send message via SendGrid."}
+                detail={
+                    "status": "error",
+                    "message": "Failed to send message via SendGrid.",
+                    "sendgrid_status": response.status_code,
+                    "sendgrid_response": response.text,
+                }
             )
 
         print(f"Email sent successfully via SendGrid from {name} ({email}) to {RECIPIENT_EMAIL}")
