@@ -1,8 +1,13 @@
 import os
 import requests
+from dotenv import load_dotenv
 from fastapi import FastAPI, Request, Form, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse 
+
+# Load local .env file for development.
+# In production, set SENDGRID_API_KEY in the host environment.
+load_dotenv()
 
 # --- IMPORTANT SECURITY NOTE ---
 # Use environment variables for API keys and sensitive credentials.
