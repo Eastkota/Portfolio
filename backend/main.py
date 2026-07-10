@@ -7,7 +7,7 @@ from fastapi.responses import JSONResponse
 
 # Load local .env file for development.
 # In production, set SENDGRID_API_KEY in the host environment.
-load_dotenv()
+load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '.env'))
 
 # --- IMPORTANT SECURITY NOTE ---
 # Use environment variables for API keys and sensitive credentials.
