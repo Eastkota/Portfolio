@@ -12,34 +12,98 @@
         body {
             font-family: 'Inter', sans-serif;
             scroll-behavior: smooth;
+            background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.14), transparent 20%),
+                radial-gradient(circle at bottom right, rgba(168, 85, 247, 0.14), transparent 18%),
+                linear-gradient(180deg, #020617 0%, #0f172a 35%, #111827 100%);
+            color: #e2e8f0;
         }
 
         /* Custom scrollbar for a nicer look */
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 10px;
         }
 
         ::-webkit-scrollbar-track {
-            background: #1a202c;
-            /* Dark background */
+            background: rgba(15, 23, 42, 0.9);
         }
 
         ::-webkit-scrollbar-thumb {
-            background: #4a5568;
-            /* Grey thumb */
-            border-radius: 4px;
+            background: linear-gradient(180deg, #38bdf8, #8b5cf6);
+            border-radius: 9999px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: #718096;
-            /* Lighter grey on hover */
+            background: linear-gradient(180deg, #7dd3fc, #c084fc);
         }
 
-        /* Keyframe animations */
+        /* Section glass panels and accent styles */
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.82);
+            backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .hero-bg {
+            background: radial-gradient(circle at top, rgba(59, 130, 246, 0.18), transparent 18%),
+                radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.16), transparent 20%),
+                linear-gradient(135deg, #020617, #111827);
+        }
+
+        .section-heading {
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-heading::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -0.6rem;
+            width: 3.5rem;
+            height: 4px;
+            border-radius: 9999px;
+            background: linear-gradient(90deg, #38bdf8, #8b5cf6, #f472b6);
+            transform: translateX(-50%);
+        }
+
+        .nav-link {
+            padding: 0.6rem 0.9rem;
+            color: #cbd5e1;
+            font-weight: 500;
+            border-radius: 9999px;
+            transition: all 0.25s ease;
+            position: relative;
+        }
+
+        .nav-link:hover,
+        .nav-link:focus {
+            color: #ffffff;
+            background: rgba(56, 189, 248, 0.12);
+            transform: translateY(-1px);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0.4rem;
+            width: 0;
+            height: 2px;
+            border-radius: 9999px;
+            background: #38bdf8;
+            transition: width 0.3s ease, left 0.3s ease;
+        }
+
+        .nav-link:hover::after,
+        .nav-link:focus::after {
+            width: 60%;
+            left: 20%;
+        }
+
         @keyframes fadeInDown {
             from {
                 opacity: 0;
-                transform: translateY(-20px);
+                transform: translateY(-24px);
             }
 
             to {
@@ -51,7 +115,7 @@
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(24px);
             }
 
             to {
@@ -63,7 +127,7 @@
         @keyframes scaleIn {
             from {
                 opacity: 0;
-                transform: scale(0.9);
+                transform: scale(0.94);
             }
 
             to {
@@ -72,45 +136,85 @@
             }
         }
 
+        @keyframes floatPulse {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
         .animate-fade-in-down {
-            animation: fadeInDown 1s ease-out forwards;
+            animation: fadeInDown 0.9s ease-out forwards;
         }
 
         .animate-fade-in-up {
-            animation: fadeInUp 1s ease-out forwards;
-            animation-delay: 0.3s;
+            animation: fadeInUp 0.9s ease-out forwards;
+            animation-delay: 0.2s;
         }
 
         .animate-scale-in {
-            animation: scaleIn 1s ease-out forwards;
-            animation-delay: 0.6s;
+            animation: scaleIn 0.9s ease-out forwards;
+            animation-delay: 0.45s;
         }
 
-        /* Responsive adjustments for smaller screens (e.g., mobile navigation) */
-        @media (max-width: 767px) {
+        .animate-float {
+            animation: floatPulse 6s ease-in-out infinite;
+        }
 
-            /* By default, the main-nav will be hidden on small screens due to Tailwind's 'hidden' class */
-            /* We only define what happens when it IS shown */
+        .project-card {
+            transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+            border-color: rgba(255, 255, 255, 0.08);
+            background: rgba(15, 23, 42, 0.92);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 24px 60px rgba(15, 23, 42, 0.26);
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px) scale(1.01);
+            border-color: rgba(56, 189, 248, 0.6);
+            box-shadow: 0 34px 85px rgba(56, 189, 248, 0.14);
+        }
+
+        .project-card img {
+            transition: transform 0.45s ease;
+        }
+
+        .project-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .highlight-pill {
+            background: linear-gradient(135deg, #38bdf8, #8b5cf6);
+            color: white;
+        }
+
+        .focus-glow:focus {
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.16);
+        }
+
+        @media (max-width: 767px) {
             .mobile-nav-open {
-                /* Renamed for clarity */
                 display: flex !important;
-                /* Use !important to ensure it overrides Tailwind's hidden if needed */
                 flex-direction: column;
                 width: 100%;
                 position: absolute;
-                top: 64px;
-                /* Height of header */
+                top: 72px;
                 left: 0;
-                background-color: #1a202c;
-                /* Dark background */
+                background: rgba(15, 23, 42, 0.96);
                 z-index: 50;
                 padding: 1rem 0;
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                box-shadow: 0 16px 40px rgba(0, 0, 0, 0.24);
+                border-top: 1px solid rgba(255, 255, 255, 0.08);
             }
 
             .mobile-nav-open li {
                 text-align: center;
-                margin: 0.5rem 0;
+                margin: 0.65rem 0;
             }
         }
     </style>
@@ -118,13 +222,13 @@
 
 <body class="bg-gray-900 text-gray-100 min-h-screen flex flex-col">
 
-    <header class="bg-gray-800 p-4 shadow-lg fixed w-full z-10">
+    <header class="bg-[#020617]/95 border-b border-white/10 backdrop-blur-xl shadow-2xl fixed w-full z-20">
         <nav class="container mx-auto flex justify-between items-center">
-            <a href="#hero" class="rounded-md p-2 transition-colors duration-300">
-                <img src="images/logo.png" alt="My Portfolio Logo" class="h-10 w-10 rounded-full object-cover" />
+            <a href="#hero" class="rounded-full p-2 transition duration-300 hover:bg-white/10">
+                <img src="images/logo.png" alt="My Portfolio Logo" class="h-11 w-11 rounded-full object-cover ring-1 ring-cyan-400/30" />
             </a>
 
-            <button id="mobile-menu-button" class="md:hidden text-gray-300 hover:text-teal-400 focus:outline-none">
+            <button id="mobile-menu-button" class="md:hidden text-slate-200 hover:text-cyan-300 focus:outline-none">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7">
@@ -132,224 +236,192 @@
                 </svg>
             </button>
 
-            <ul id="main-nav" class="hidden md:flex space-x-6">
-                <li><a href="#about"
-                        class="text-lg text-gray-300 hover:text-teal-400 font-medium transition-colors duration-300 rounded-md p-2">About</a>
-                </li>
-                <li><a href="#projects"
-                        class="text-lg text-gray-300 hover:text-teal-400 font-medium transition-colors duration-300 rounded-md p-2">Projects</a>
-                </li>
-                <li><a href="#testimonials"
-                        class="text-lg text-gray-300 hover:text-teal-400 font-medium transition-colors duration-300 rounded-md p-2">Testimonials</a>
-                </li>
-                <li><a href="#contact"
-                        class="text-lg text-gray-300 hover:text-teal-400 font-medium transition-colors duration-300 rounded-md p-2">Contact</a>
-                </li>
-                <li><a href="certificates.html"
-                        class="text-lg text-gray-300 hover:text-teal-400 font-medium transition-colors duration-300 rounded-md p-2">Certificates</a>
-                </li>
+            <ul id="main-nav" class="hidden md:flex space-x-4 lg:space-x-6">
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+                <li><a href="certificates.html" class="nav-link">Certificates</a></li>
             </ul>
         </nav>
     </header>
 
     <main class="flex-grow pt-16">
         <section id="hero"
-            class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900 text-center p-6 sm:p-8">
+            class="min-h-screen flex items-center justify-center hero-bg text-center p-6 sm:p-8">
             <div class="max-w-4xl mx-auto px-4">
-                <img src="images/profile.png" alt="Profile Picture"
-                    class="rounded-full mx-auto mb-6 border-4 border-teal-500 shadow-xl w-32 h-32 sm:w-40 sm:h-40 object-cover">
+                <div class="relative inline-flex mx-auto mb-8">
+                    <div class="absolute inset-0 rounded-full bg-cyan-400/20 blur-3xl"></div>
+                    <img src="images/profile.png" alt="Profile Picture"
+                        class="relative rounded-full mx-auto mb-6 border-[5px] border-cyan-400/30 shadow-[0_30px_90px_rgba(56,189,248,0.18)] w-32 h-32 sm:w-40 sm:h-40 object-cover animate-float">
+                </div>
                 <h1
                     class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white leading-tight mb-4 animate-fade-in-down">
-                    Hi,
-                    I'm <span class="text-teal-400">Tenzin Dorji</span></h1>
-                <p class="text-xl sm:text-2xl md:text-3xl text-gray-300 mb-8 animate-fade-in-up">A passionate <span
-                        class="text-orange-400">Software Developer</span> building awesome applications.</p>
+                    Hi, I'm <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-violet-400 to-pink-400">Tenzin Dorji</span>
+                </h1>
+                <p class="text-xl sm:text-2xl md:text-3xl text-slate-300 mb-8 animate-fade-in-up">A passionate <span
+                        class="text-gradient font-semibold text-cyan-300">Software Developer</span> building modern,
+                    polished applications.</p>
                 <div
                     class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6 animate-scale-in">
                     <a href="#projects"
-                        class="bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-8 rounded-full shadow-lg transform transition-all duration-300 hover:scale-105">View
+                        class="bg-gradient-to-r from-cyan-500 to-violet-500 hover:from-cyan-400 hover:to-violet-400 text-white font-semibold py-3 px-8 rounded-full shadow-2xl shadow-cyan-500/20 transform transition-all duration-300 hover:-translate-y-1 hover:scale-105">View
                         My Work</a>
                     <a href="#contact"
-                        class="bg-transparent border-2 border-teal-600 text-teal-400 hover:bg-teal-600 hover:text-white font-semibold py-3 px-8 rounded-full shadow-lg transform transition-all duration-300 hover:scale-105">Get
+                        class="bg-transparent border-2 border-cyan-400/40 text-cyan-300 hover:bg-cyan-400/10 hover:text-white font-semibold py-3 px-8 rounded-full shadow-lg transform transition-all duration-300 hover:-translate-y-1 hover:scale-105">Get
                         in Touch</a>
                 </div>
             </div>
         </section>
 
-        <section id="about" class="py-16 md:py-20 bg-gray-900 px-6 sm:px-8">
+        <section id="about" class="py-16 md:py-20 px-6 sm:px-8">
             <div class="container mx-auto max-w-5xl">
-                <h2 class="text-3xl sm:text-4xl font-bold text-center text-teal-400 mb-8 md:mb-12">About Me</h2>
+                <h2 class="text-3xl sm:text-4xl font-bold text-center text-white section-heading mb-8 md:mb-12">About
+                    Me</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
-                    <div class="text-base sm:text-lg text-gray-300 space-y-4">
-                        <p>Hello! I'm Tenzin Dorji, a dedicated software developer with a passion for creating robust
-                            and
+                    <div class="text-base sm:text-lg text-slate-300 space-y-4 glass-panel p-6 rounded-3xl shadow-2xl border border-white/10">
+                        <p>Hello! I'm Tenzin Dorji, a dedicated software developer with a passion for creating robust and
                             scalable web applications. My journey into programming started with a fascination for how
                             software solves real-world problems, and since then, I've been continuously learning and
                             building.</p>
                         <p>I specialize in Python with frameworks like FastAPI for the backend, and I love crafting
-                            engaging user interfaces using modern frontend technologies like Tailwind CSS and
-                            JavaScript. My goal is to deliver clean, efficient, and user-friendly solutions that bring
-                            ideas to life.</p>
-                        <p>Outside of coding, I enjoy sports, designing logo and curriculum vitae. I
-                            believe continuous learning and a balanced life are key to innovation and productivity.</p>
+                            engaging user interfaces using modern frontend technologies like Tailwind CSS and JavaScript.
+                            My goal is to deliver clean, efficient, and user-friendly solutions that bring ideas to life.
+                        </p>
+                        <p>Outside of coding, I enjoy sports, designing logos, and curriculum vitae. I believe continuous
+                            learning and a balanced life are key to innovation and productivity.</p>
                     </div>
-                    <div class="bg-gray-800 p-6 sm:p-8 rounded-lg shadow-xl border border-gray-700">
+                    <div class="glass-panel p-6 sm:p-8 rounded-[28px] shadow-2xl border border-white/10">
                         <h3 class="text-xl sm:text-2xl font-semibold text-white mb-4 sm:mb-6">Skills</h3>
                         <div class="flex flex-wrap gap-3 sm:gap-4">
-                            <span
-                                class="bg-blue-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium shadow-md">Python</span>
-                            <span
-                                class="bg-green-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium shadow-md">FastAPI</span>
-                            <span
-                                class="bg-purple-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium shadow-md">SQLAlchemy</span>
-                            <span
-                                class="bg-teal-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium shadow-md">JavaScript</span>
-                            <span
-                                class="bg-indigo-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium shadow-md">Django</span>
-                            <span
-                                class="bg-indigo-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium shadow-md">Advance
-                                Excel</span>
-                            <span
-                                class="bg-indigo-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium shadow-md">PHP</span>
-                            <span
-                                class="bg-indigo-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium shadow-md">Laravel</span>
-                            <span
-                                class="bg-yellow-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium shadow-md">HTML5</span>
-                            <span
-                                class="bg-red-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium shadow-md">CSS3</span>
-                            <span
-                                class="bg-sky-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium shadow-md">Tailwind
-                                CSS</span>
-                            <span
-                                class="bg-pink-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium shadow-md">Power
-                                BI</span>
-                            <span
-                                class="bg-pink-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium shadow-md">Logo
-                                & CV Design</span>
-                            <span
-                                class="bg-pink-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium shadow-md">React.js</span>
-                            <span
-                                class="bg-gray-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium shadow-md">Git</span>
+                            <span class="highlight-pill px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium">Python</span>
+                            <span class="highlight-pill px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium">FastAPI</span>
+                            <span class="highlight-pill px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium">SQLAlchemy</span>
+                            <span class="highlight-pill px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium">JavaScript</span>
+                            <span class="highlight-pill px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium">Django</span>
+                            <span class="highlight-pill px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium">Advance Excel</span>
+                            <span class="highlight-pill px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium">PHP</span>
+                            <span class="highlight-pill px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium">Laravel</span>
+                            <span class="highlight-pill px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium">HTML5</span>
+                            <span class="highlight-pill px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium">CSS3</span>
+                            <span class="highlight-pill px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium">Tailwind CSS</span>
+                            <span class="highlight-pill px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium">Power BI</span>
+                            <span class="highlight-pill px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium">Logo & CV Design</span>
+                            <span class="highlight-pill px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium">React.js</span>
+                            <span class="highlight-pill px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium">Git</span>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="experience" class="py-16 md:py-20 bg-gray-800 px-6 sm:px-8">
+        <section id="experience" class="py-16 md:py-20 px-6 sm:px-8">
             <div class="container mx-auto max-w-5xl">
-                <h2 class="text-3xl sm:text-4xl font-bold text-center text-teal-400 mb-8 md:mb-12">Experience</h2>
+                <h2 class="text-3xl sm:text-4xl font-bold text-center text-white section-heading mb-8 md:mb-12">Experience</h2>
 
                 <div class="space-y-10">
-                    <div class="bg-gray-900 p-6 sm:p-8 rounded-lg shadow-xl border border-gray-700 animate-fade-in-up">
+                    <div class="glass-panel p-6 sm:p-8 rounded-[28px] shadow-2xl border border-white/10 animate-fade-in-up">
                         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4">
                             <div>
                                 <h3 class="text-xl sm:text-2xl font-semibold text-white">Software Developer</h3>
-                                <p class="text-teal-400 text-lg sm:text-xl">IBest Technologies</p>
+                                <p class="text-cyan-300 text-lg sm:text-xl">IBest Technologies</p>
                             </div>
-                            <p class="text-gray-400 text-sm sm:text-base mt-2 sm:mt-0">July 2024 - Ongoing </p>
+                            <p class="text-slate-400 text-sm sm:text-base mt-2 sm:mt-0">July 2024 - Ongoing</p>
                         </div>
-                        <ul class="list-disc list-inside text-gray-300 space-y-2 text-base sm:text-lg">
-                            <li>Participated in game development of <strong>Educare Skill</strong> using <strong>C#</strong> and
-                                <strong>Unity</strong>
-                            </li>
-                            <li>Implemented backend program with <strong>Python FastAPI</strong> and
-                                <strong>GraphQL-Strawberry</strong> for fast and optimal performance.
-                            </li>
-                            <li>Implemented <strong>php Laravel</strong> in a system for development convinience.</li>
-                            <li>Implemented <strong>go encore</strong> with <strong>GraphQL</strong> in a micro-service system of <strong>Educare Skill</strong> backend.</li>
-                            <li>Actively participated in deploying Educare System to <strong>AWS</strong> server, integrating <strong>Vdocipher</strong> storange and <strong>AWS S3</strong> storage.</li>
-                            <li>Worked closely with senior developers to troubleshoot and debug applications, resolving
-                                critical issues promptly.</li>
-                            <li>Contributed to the deployment process and assisted in maintaining various web
-                                applications.</li>
+                        <ul class="list-disc list-inside text-slate-300 space-y-2 text-base sm:text-lg">
+                            <li>Participated in game development of <strong>Educare Skill</strong> using <strong>C#</strong> and <strong>Unity</strong>.</li>
+                            <li>Implemented backend program with <strong>Python FastAPI</strong> and <strong>GraphQL-Strawberry</strong> for fast and optimal performance.</li>
+                            <li>Implemented <strong>PHP Laravel</strong> in a system for development convenience.</li>
+                            <li>Built microservice backend with <strong>Go Encore</strong> and <strong>GraphQL</strong> for Educare Skill.</li>
+                            <li>Deployed Educare System to <strong>AWS</strong>, integrating <strong>Vdocipher</strong> and <strong>S3</strong> storage.</li>
+                            <li>Worked closely with senior developers to troubleshoot and debug applications effectively.</li>
+                            <li>Supported deployment and maintenance of production web applications.</li>
                         </ul>
                     </div>
                 </div>
-                <!-- Trainer -->
                 <div class="space-y-10 mt-10">
-                    <div class="bg-gray-900 p-6 sm:p-8 rounded-lg shadow-xl border border-gray-700 animate-fade-in-up">
+                    <div class="glass-panel p-6 sm:p-8 rounded-[28px] shadow-2xl border border-white/10 animate-fade-in-up">
                         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4">
                             <div>
-                                <h3 class="text-xl sm:text-2xl font-semibold text-white">IC3 Digital Level 1Trainer</h3>
-                                <p class="text-teal-400 text-lg sm:text-xl">IBest Institute cum GovTech Agency</p>
+                                <h3 class="text-xl sm:text-2xl font-semibold text-white">IC3 Digital Level 1 Trainer</h3>
+                                <p class="text-cyan-300 text-lg sm:text-xl">IBest Institute cum GovTech Agency</p>
                             </div>
-                            <p class="text-gray-400 text-sm sm:text-base mt-2 sm:mt-0">March 2026 - June 2026 </p>
+                            <p class="text-slate-400 text-sm sm:text-base mt-2 sm:mt-0">March 2026 - June 2026</p>
                         </div>
-                        <ul class="list-disc list-inside text-gray-300 space-y-2 text-base sm:text-lg">
-                            <li>Trained various students and professionals on the fundamentals of digital literacy, including computer basics, internet usage, and productivity software.
-                            </li>
-                            <li>Developed and delivered engaging training materials, including presentations, exercises, and assessments, to enhance learning outcomes.
-                            </li>
-                            <li>Conducted regular evaluations and provided feedback to students to improve their digital literacy skills.
-                            </li>
-                            <li>Delivered training sessions and workshops to various gewogs, organizations and institutions.
-                            </li>
+                        <ul class="list-disc list-inside text-slate-300 space-y-2 text-base sm:text-lg">
+                            <li>Trained students and professionals in digital literacy, computer basics, internet usage, and productivity tools.</li>
+                            <li>Developed engaging materials including presentations, exercises, and assessments.</li>
+                            <li>Provided feedback and evaluations to support continuous learning progress.</li>
+                            <li>Delivered training sessions across gewogs, organizations, and institutions.</li>
                         </ul>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="projects" class="py-16 md:py-20 bg-gray-800 px-6 sm:px-8">
+        <section id="projects" class="py-16 md:py-20 px-6 sm:px-8">
             <div class="container mx-auto max-w-5xl">
-                <h2 class="text-3xl sm:text-4xl font-bold text-center text-teal-400 mb-8 md:mb-12">My Projects</h2>
+                <h2 class="text-3xl sm:text-4xl font-bold text-center text-white section-heading mb-8 md:mb-12">My Projects</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div
-                        class="bg-gray-900 rounded-lg shadow-xl overflow-hidden border border-gray-700 transform transition-transform duration-300 hover:scale-105">
-                        <img src="images/gis.webp" alt="Project 1" class="w-full h-48 object-cover bg-white">
+                    <div class="project-card rounded-[28px] overflow-hidden">
+                        <img src="images/gis.webp" alt="Project 1" class="w-full h-56 object-cover bg-white">
                         <div class="p-6">
                             <h3 class="text-xl sm:text-2xl font-semibold text-white mb-3">Geo-Hazard System</h3>
-                            <p class="text-gray-400 text-sm sm:text-base mb-4">The system build with FastAPI and
-                                GraphQL Strawberry
-                                was to maintain the inventory of landslide and share public about earthquake and its
-                                magnitude around Bhutan</p>
+                            <p class="text-slate-300 text-sm sm:text-base mb-4">A FastAPI + GraphQL system for managing landslide inventory and sharing earthquake insights across Bhutan.</p>
                             <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="bg-blue-700 text-xs px-3 py-1 rounded-full">FastAPI</span>
-                                <span class="bg-green-700 text-xs px-3 py-1 rounded-full">React</span>
-                                <span class="bg-purple-700 text-xs px-3 py-1 rounded-full">GraphQL-Strawberry</span>
+                                <span class="bg-cyan-500/10 text-cyan-200 px-3 py-1 rounded-full text-xs">FastAPI</span>
+                                <span class="bg-violet-500/10 text-violet-200 px-3 py-1 rounded-full text-xs">React</span>
+                                <span class="bg-fuchsia-500/10 text-fuchsia-200 px-3 py-1 rounded-full text-xs">GraphQL-Strawberry</span>
                             </div>
                             <div class="flex justify-between items-center">
-                                <a href="https://geohazards.systems.gov.bt" target="_blank"
-                                    class="text-teal-400 hover:text-teal-300 font-medium flex items-center transition-colors duration-300 text-sm">
+                                <a href="https://geohazards.systems.gov.bt" target="_blank" class="text-cyan-300 hover:text-cyan-200 font-medium flex items-center transition-colors duration-300 text-sm">
                                     Live Demo
-                                    <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4m-4-8h8m0 0v8m0-8L14 10">
-                                        </path>
+                                    <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4m-4-8h8m0 0v8m0-8L14 10"></path>
                                     </svg>
                                 </a>
-
                             </div>
                         </div>
                     </div>
 
-                    <div
-                        class="bg-gray-900 rounded-lg shadow-xl overflow-hidden border border-gray-700 transform transition-transform duration-300 hover:scale-105">
-                        <img src="images/esakor-urban.png" alt="Project 2" class="w-full h-48 object-cover">
+                    <div class="project-card rounded-[28px] overflow-hidden">
+                        <img src="images/esakor-urban.png" alt="Project 2" class="w-full h-56 object-cover">
                         <div class="p-6">
                             <h3 class="text-xl sm:text-2xl font-semibold text-white mb-3">Esakor-Urban</h3>
-                            <p class="text-gray-400 text-sm sm:text-base mb-4">This system is build with php with
-                                laravel to make the ciizen of Bhutan digitally and easily accessible over their lands
-                                all over the country in urban areas.</p>
+                            <p class="text-slate-300 text-sm sm:text-base mb-4">A Laravel-based citizen services platform bringing easier land access and urban digital services across Bhutan.</p>
                             <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="bg-red-700 text-xs px-3 py-1 rounded-full">PHP</span>
-                                <span class="bg-blue-700 text-xs px-3 py-1 rounded-full">Laravel</span>
-                                <span class="bg-yellow-700 text-xs px-3 py-1 rounded-full">Data Tables</span>
+                                <span class="bg-rose-500/10 text-rose-200 px-3 py-1 rounded-full text-xs">PHP</span>
+                                <span class="bg-sky-500/10 text-sky-200 px-3 py-1 rounded-full text-xs">Laravel</span>
+                                <span class="bg-amber-500/10 text-amber-200 px-3 py-1 rounded-full text-xs">Data Tables</span>
                             </div>
                             <div class="flex justify-between items-center">
-                                <a href="https://urban.nlcs.gov.bt" target="_blank"
-                                    class="text-teal-400 hover:text-teal-300 font-medium flex items-center transition-colors duration-300 text-sm">
+                                <a href="https://urban.nlcs.gov.bt" target="_blank" class="text-cyan-300 hover:text-cyan-200 font-medium flex items-center transition-colors duration-300 text-sm">
                                     Live Demo
-                                    <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4m-4-8h8m0 0v8m0-8L14 10">
-                                        </path>
+                                    <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4m-4-8h8m0 0v8m0-8L14 10"></path>
                                     </svg>
                                 </a>
+                            </div>
+                        </div>
+                    </div>
 
+                    <div class="project-card rounded-[28px] overflow-hidden">
+                        <img src="images/esakor-urban.png" alt="Project 3" class="w-full h-56 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl sm:text-2xl font-semibold text-white mb-3">Esakor-Rural</h3>
+                            <p class="text-slate-300 text-sm sm:text-base mb-4">A Laravel service enabling rural citizens in Bhutan to manage land and documents digitally.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="bg-rose-500/10 text-rose-200 px-3 py-1 rounded-full text-xs">PHP</span>
+                                <span class="bg-sky-500/10 text-sky-200 px-3 py-1 rounded-full text-xs">Laravel</span>
+                                <span class="bg-amber-500/10 text-amber-200 px-3 py-1 rounded-full text-xs">Data Tables</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <a href="https://rural.nlcs.gov.bt/" target="_blank" class="text-cyan-300 hover:text-cyan-200 font-medium flex items-center transition-colors duration-300 text-sm">
+                                    Live Demo
+                                    <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4m-4-8h8m0 0v8m0-8L14 10"></path>
+                                    </svg>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -383,60 +455,44 @@
                         </div>
                     </div>
 
-                    <div
-                        class="bg-gray-900 rounded-lg shadow-xl overflow-hidden border border-gray-700 transform transition-transform duration-300 hover:scale-105">
-                        <img src="images/educare-logo.jpeg" alt="Project 3" class="w-full h-48 object-cover">
+                    <div class="project-card rounded-[28px] overflow-hidden">
+                        <img src="images/educare-logo.jpeg" alt="Project 3" class="w-full h-56 object-cover">
                         <div class="p-6">
-                            <h3 class="text-xl sm:text-2xl font-semibold text-white mb-3">Educare Skill(Game
-                                Development)</h3>
-                            <p class="text-gray-400 text-sm sm:text-base mb-4">This system contains various games that
-                                aims to help young student of Bhutan learns their national language(Dzongkha) through
-                                entertainments</p>
+                            <h3 class="text-xl sm:text-2xl font-semibold text-white mb-3">Educare Skill (Game Development)</h3>
+                            <p class="text-slate-300 text-sm sm:text-base mb-4">A learning game suite for Bhutanese students that teaches Dzongkha through interactive gameplay.</p>
                             <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="bg-red-700 text-xs px-3 py-1 rounded-full">C#</span>
-                                <span class="bg-blue-700 text-xs px-3 py-1 rounded-full">Unity</span>
-                                <span class="bg-yellow-700 text-xs px-3 py-1 rounded-full">Sprites</span>
+                                <span class="bg-rose-500/10 text-rose-200 px-3 py-1 rounded-full text-xs">C#</span>
+                                <span class="bg-sky-500/10 text-sky-200 px-3 py-1 rounded-full text-xs">Unity</span>
+                                <span class="bg-amber-500/10 text-amber-200 px-3 py-1 rounded-full text-xs">Sprites</span>
                             </div>
                             <div class="flex justify-between items-center">
-                                <a href="https://www.educareskill.com/" target="_blank"
-                                    class="text-teal-400 hover:text-teal-300 font-medium flex items-center transition-colors duration-300 text-sm">
+                                <a href="https://www.educareskill.com/" target="_blank" class="text-cyan-300 hover:text-cyan-200 font-medium flex items-center transition-colors duration-300 text-sm">
                                     Live Demo
-                                    <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4m-4-8h8m0 0v8m0-8L14 10">
-                                        </path>
+                                    <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4m-4-8h8m0 0v8m0-8L14 10"></path>
                                     </svg>
                                 </a>
                             </div>
                         </div>
                     </div>
 
-                    <div
-                        class="bg-gray-900 rounded-lg shadow-xl overflow-hidden border border-gray-700 transform transition-transform duration-300 hover:scale-105">
-                        <img src="images/educare-logo.jpeg" alt="Project 3" class="w-full h-48 object-cover">
+                    <div class="project-card rounded-[28px] overflow-hidden">
+                        <img src="images/educare-logo.jpeg" alt="Project 4" class="w-full h-56 object-cover">
                         <div class="p-6">
-                            <h3 class="text-xl sm:text-2xl font-semibold text-white mb-3">Educare Skill(Backend
-                                Development)</h3>
-                            <p class="text-gray-400 text-sm sm:text-base mb-4">This system contains various games that
-                                aims to help young student of Bhutan learns their national language(Dzongkha) through
-                                entertainments</p>
+                            <h3 class="text-xl sm:text-2xl font-semibold text-white mb-3">Educare Skill (Backend Development)</h3>
+                            <p class="text-slate-300 text-sm sm:text-base mb-4">A high-performance backend built on Go and GraphQL, powering secure video delivery and data workflows on AWS.</p>
                             <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="bg-red-700 text-xs px-3 py-1 rounded-full">Go</span>
-                                <span class="bg-blue-700 text-xs px-3 py-1 rounded-full">Graphql</span>
-                                <span class="bg-yellow-700 text-xs px-3 py-1 rounded-full">Vdocipher</span>
-                                <span class="bg-yellow-700 text-xs px-3 py-1 rounded-full">AWS Server</span>
-                                <span class="bg-yellow-700 text-xs px-3 py-1 rounded-full">PostgresSQL</span>
+                                <span class="bg-fuchsia-500/10 text-fuchsia-200 px-3 py-1 rounded-full text-xs">Go</span>
+                                <span class="bg-sky-500/10 text-sky-200 px-3 py-1 rounded-full text-xs">GraphQL</span>
+                                <span class="bg-amber-500/10 text-amber-200 px-3 py-1 rounded-full text-xs">Vdocipher</span>
+                                <span class="bg-emerald-500/10 text-emerald-200 px-3 py-1 rounded-full text-xs">AWS</span>
+                                <span class="bg-cyan-500/10 text-cyan-200 px-3 py-1 rounded-full text-xs">PostgreSQL</span>
                             </div>
                             <div class="flex justify-between items-center">
-                                <a href="https://www.educareskill.com/" target="_blank"
-                                    class="text-teal-400 hover:text-teal-300 font-medium flex items-center transition-colors duration-300 text-sm">
+                                <a href="https://www.educareskill.com/" target="_blank" class="text-cyan-300 hover:text-cyan-200 font-medium flex items-center transition-colors duration-300 text-sm">
                                     Live Demo
-                                    <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4m-4-8h8m0 0v8m0-8L14 10">
-                                        </path>
+                                    <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4m-4-8h8m0 0v8m0-8L14 10"></path>
                                     </svg>
                                 </a>
                             </div>
@@ -446,7 +502,7 @@
             </div>
         </section>
 
-        ---
+        <!-- separator -->
         <!-- <section id="testimonials" class="py-16 md:py-20 bg-gray-900 px-6 sm:px-8">
             <div class="container mx-auto max-w-4xl text-center">
                 <h2 class="text-3xl sm:text-4xl font-bold text-teal-400 mb-8 md:mb-12">What People Say</h2>
@@ -553,54 +609,38 @@
         </section> -->
 
 
-        <section id="contact" class="py-16 md:py-20 bg-gray-900 px-6 sm:px-8">
-            <div class="container mx-auto max-w-xl text-center">
-                <h2 class="text-3xl sm:text-4xl font-bold text-teal-400 mb-6 sm:mb-8">Get in Touch</h2>
-                <p class="text-base sm:text-lg text-gray-300 mb-6 sm:mb-8">I'm always open to new opportunities,
-                    collaborations, and interesting conversations. Feel free to reach out!</p>
-                <p class="text-base sm:text-lg text-gray-300 mb-6 sm:mb-8">or Kindly reach me at +975-77424922 /
-                    dtenzin.nov@gmail.com</p>
-                <form id="contactForm" method="POST"
-                    class="bg-gray-800 p-6 sm:p-8 rounded-lg shadow-xl border border-gray-700">
-                    <div class="mb-4 sm:mb-6">
-                        <label for="name" class="block text-gray-200 text-left text-sm font-medium mb-2">Name</label>
-                        <input type="text" id="name" name="name"
-                            class="w-full px-3 py-2 sm:px-4 sm:py-3 rounded-md bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 border border-gray-600"
-                            placeholder="Your Name" required>
+        <section id="contact" class="py-16 md:py-20 px-6 sm:px-8">
+            <div class="container mx-auto max-w-xl text-center glass-panel p-8 rounded-[32px] shadow-2xl border border-white/10">
+                <h2 class="text-3xl sm:text-4xl font-bold text-white section-heading mb-6 sm:mb-8">Get in Touch</h2>
+                <p class="text-base sm:text-lg text-slate-300 mb-4">I'm always open to new opportunities, collaborations, and interesting conversations. Feel free to reach out!</p>
+                <p class="text-base sm:text-lg text-slate-300 mb-8">You can also contact me directly at <strong class="text-cyan-300">+975-77424922</strong> or <strong class="text-cyan-300">dtenzin.nov@gmail.com</strong>.</p>
+                <form id="contactForm" method="POST" class="space-y-5">
+                    <div class="grid gap-4 sm:grid-cols-2">
+                        <div>
+                            <label for="name" class="block text-slate-200 text-sm font-medium mb-2">Name</label>
+                            <input type="text" id="name" name="name" class="w-full px-4 py-3 rounded-2xl bg-slate-900/95 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400" placeholder="Your Name" required>
+                        </div>
+                        <div>
+                            <label for="email" class="block text-slate-200 text-sm font-medium mb-2">Email</label>
+                            <input type="email" id="email" name="email" class="w-full px-4 py-3 rounded-2xl bg-slate-900/95 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400" placeholder="your.email@example.com" required>
+                        </div>
                     </div>
-                    <div class="mb-4 sm:mb-6">
-                        <label for="email" class="block text-gray-200 text-left text-sm font-medium mb-2">Email</label>
-                        <input type="email" id="email" name="email"
-                            class="w-full px-3 py-2 sm:px-4 sm:py-3 rounded-md bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 border border-gray-600"
-                            placeholder="your.email@example.com" required>
+                    <div>
+                        <label for="message" class="block text-slate-200 text-sm font-medium mb-2">Message</label>
+                        <textarea id="message" name="message" rows="5" class="w-full px-4 py-3 rounded-2xl bg-slate-900/95 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400" placeholder="Your message..." required></textarea>
                     </div>
-                    <div class="mb-4 sm:mb-6">
-                        <label for="message"
-                            class="block text-gray-200 text-left text-sm font-medium mb-2">Message</label>
-                        <textarea id="message" name="message" rows="4"
-                            class="w-full px-3 py-2 sm:px-4 sm:py-3 rounded-md bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 border border-gray-600"
-                            placeholder="Your message..." required></textarea>
-                    </div>
-                    <button type="submit"
-                        class="bg-teal-600 hover:bg-teal-700 text-white font-semibold py-2 px-6 sm:py-3 sm:px-8 rounded-full shadow-lg transform transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:ring-offset-gray-900">Send
-                        Message</button>
-                    <div id="formMessage" class="mt-4 text-sm font-medium"></div>
+                    <button type="submit" class="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-cyan-500 to-violet-500 hover:from-cyan-400 hover:to-violet-400 text-white font-semibold py-3 px-8 rounded-full shadow-2xl shadow-cyan-500/20 transition-transform duration-300 hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-cyan-400/30">Send Message</button>
+                    <div id="formMessage" class="mt-4 text-sm font-medium text-slate-100"></div>
                 </form>
-                <div class="mt-8 sm:mt-10 flex justify-center space-x-4 sm:space-x-6">
-                    <a href="https://github.com/Eastkota" target="_blank"
-                        class="text-gray-400 hover:text-white transition-colors duration-300">
-                        <svg class="w-7 h-7 sm:w-8 sm:h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                            <path fill-rule="evenodd"
-                                d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.47.087.67-.217.67-.483 0-.237-.01-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.905-.618.069-.607.069-.607 1.002.072 1.531 1.029 1.531 1.029.892 1.529 2.341 1.088 2.91.834.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.114-4.555-4.942 0-1.09.39-1.983 1.03-2.673-.103-.252-.447-1.264.098-2.635 0 0 .84-.268 2.75 1.022A9.614 9.614 0 0112 4.043c.85.004 1.701.111 2.492.327 1.909-1.29 2.747-1.022 2.747-1.022.546 1.37.202 2.383.098 2.635.64.69 1.029 1.582 1.029 2.673 0 3.837-2.339 4.685-4.566 4.935.359.307.678.915.678 1.846 0 1.334-.012 2.41-.012 2.723 0 .267.2.576.675.479C21.13 20.2 24 16.446 24 12.017 24 6.484 19.522 2 14 2h-2z"
-                                clip-rule="evenodd" />
+                <div class="mt-10 flex justify-center items-center gap-6">
+                    <a href="https://github.com/Eastkota" target="_blank" class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-slate-900/80 border border-slate-700 text-cyan-200 hover:bg-cyan-500/15 transition duration-300">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.47.087.67-.217.67-.483 0-.237-.01-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.905-.618.069-.607.069-.607 1.002.072 1.531 1.029 1.531 1.029.892 1.529 2.341 1.088 2.91.834.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.114-4.555-4.942 0-1.09.39-1.983 1.03-2.673-.103-.252-.447-1.264.098-2.635 0 0 .84-.268 2.75 1.022A9.614 9.614 0 0112 4.043c.85.004 1.701.111 2.492.327 1.909-1.29 2.747-1.022 2.747-1.022.546 1.37.202 2.383.098 2.635.64.69 1.029 1.582 1.029 2.673 0 3.837-2.339 4.685-4.566 4.935.359.307.678.915.678 1.846 0 1.334-.012 2.41-.012 2.723 0 .267.2.576.675.479C21.13 20.2 24 16.446 24 12.017 24 6.484 19.522 2 14 2h-2z" clip-rule="evenodd" />
                         </svg>
                     </a>
-                    <a href="https://www.linkedin.com/in/tenzin-dorji-a4532227b" target="_blank"
-                        class="text-gray-400 hover:text-white transition-colors duration-300">
-                        <svg class="w-7 h-7 sm:w-8 sm:h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                            <path
-                                d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.381 1.11-2.5 2.48-2.5s2.48 1.119 2.48 2.5zM.02 24h4.96V8h-4.96V24zM9.52 8c-1.91 0-3.48 1.565-3.48 3.483V24h4.96v-8.093c0-2.394 1.296-3.793 3.024-3.793 1.71 0 2.54 1.042 2.54 2.725V24H22.5V11.53c0-4.018-2.196-5.836-5.188-5.836-2.51 0-3.56 1.41-4.04 2.05h-.04v-.277c0-.214-.02-.4-.02-.693H9.52z">
-                            </path>
+                    <a href="https://www.linkedin.com/in/tenzin-dorji-a4532227b" target="_blank" class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-slate-900/80 border border-slate-700 text-cyan-200 hover:bg-cyan-500/15 transition duration-300">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.381 1.11-2.5 2.48-2.5s2.48 1.119 2.48 2.5zM.02 24h4.96V8h-4.96V24zM9.52 8c-1.91 0-3.48 1.565-3.48 3.483V24h4.96v-8.093c0-2.394 1.296-3.793 3.024-3.793 1.71 0 2.54 1.042 2.54 2.725V24H22.5V11.53c0-4.018-2.196-5.836-5.188-5.836-2.51 0-3.56 1.41-4.04 2.05h-.04v-.277c0-.214-.02-.4-.02-.693H9.52z"></path>
                         </svg>
                     </a>
                 </div>
