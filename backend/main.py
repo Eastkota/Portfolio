@@ -1,15 +1,12 @@
 import os
-import smtplib
-from email.mime.text import MIMEText
+import requests
 from fastapi import FastAPI, Request, Form, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse 
 
 # --- IMPORTANT SECURITY NOTE ---
-# For a production application, you should NEVER hardcode sensitive information
-# like email passwords directly in your code. Use environment variables.
-# This example keeps your hardcoded values as per your request, but be aware
-# this is not secure for public repositories or production environments.
+# Use environment variables for API keys and sensitive credentials.
+# Set SENDGRID_API_KEY in your Render (or hosting) environment variables.
 # -------------------------------
 
 app = FastAPI()
@@ -32,12 +29,10 @@ app.add_middleware(
 )
 # --------------------------
 
-# --- SMTP Configuration ---
-# Switched to Port 465 (SMTPS) for better compatibility with some hosts (like Render)
-YOUR_EMAIL_ACCOUNT = "dtenzin.nov@gmail.com"  # Your actual sender email
-YOUR_EMAIL_PASSWORD = "yhrv iivf sajq zpdl" # Your Gmail App Password
-SMTP_SERVER = "smtp.gmail.com"
-SMTP_PORT = 465                          # SMTPS (SSL) port
+# --- SendGrid Configuration ---
+YOUR_EMAIL_ACCOUNT = "dtenzin.nov@gmail.com"  # Your sender email address
+SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
+SENDGRID_API_URL = "https://api.sendgrid.com/v3/mail/send"
 
 RECIPIENT_EMAIL = "dtenzin.nov@gmail.com" # The email address where messages will be sent
 # --------------------------
@@ -59,40 +54,56 @@ async def send_message(
         )
 
     try:
-        # Create the email content
-        msg = MIMEText(f"Name: {name}\nEmail: {email}\n\nMessage:\n{message}")
-        msg["Subject"] = f"Portfolio Contact: Message from {name}"
-        msg["From"] = YOUR_EMAIL_ACCOUNT 
-        msg["To"] = RECIPIENT_EMAIL
-        msg["Reply-To"] = email 
+        if not SENDGRID_API_KEY:
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail={"status": "error", "message": "SendGrid API key is not configured."}
+            )
 
-        # Connect to the SMTP server using SMTPS (SSL) on port 465.
-        with smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT) as server:
-            server.login(YOUR_EMAIL_ACCOUNT, YOUR_EMAIL_PASSWORD)
-            server.send_message(msg)
+        payload = {
+            "personalizations": [
+                {
+                    "to": [{"email": RECIPIENT_EMAIL}],
+                    "subject": f"Portfolio Contact: Message from {name}"
+                }
+            ],
+            "from": {"email": YOUR_EMAIL_ACCOUNT, "name": "Portfolio Contact"},
+            "reply_to": {"email": email, "name": name},
+            "content": [
+                {
+                    "type": "text/plain",
+                    "value": f"Name: {name}\nEmail: {email}\n\nMessage:\n{message}"
+                }
+            ]
+        }
 
-        print(f"Email sent successfully from {name} ({email}) to {RECIPIENT_EMAIL}")
+        headers = {
+            "Authorization": f"Bearer {SENDGRID_API_KEY}",
+            "Content-Type": "application/json"
+        }
+
+        response = requests.post(SENDGRID_API_URL, json=payload, headers=headers, timeout=20)
+
+        if response.status_code not in (200, 201, 202):
+            print(f"SendGrid error: {response.status_code} {response.text}")
+            raise HTTPException(
+                status_code=status.HTTP_502_BAD_GATEWAY,
+                detail={"status": "error", "message": "Failed to send message via SendGrid."}
+            )
+
+        print(f"Email sent successfully via SendGrid from {name} ({email}) to {RECIPIENT_EMAIL}")
         return JSONResponse(
             status_code=status.HTTP_200_OK,
             content={"status": "success", "message": "Your message has been sent successfully!"}
         )
 
-    except smtplib.SMTPAuthenticationError:
-        # This will happen if the App Password or email is incorrect
-        print("SMTP Authentication Error: Check YOUR email username and App Password.")
+    except requests.exceptions.RequestException as e:
+        print(f"SendGrid request error: {e}")
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED, 
-            detail={"status": "error", "message": "Failed to send message: Authentication failed."}
-        )
-    except smtplib.SMTPConnectError:
-        # This will happen if the network connection fails
-        print(f"SMTP Connection Error: Could not connect to {SMTP_SERVER}:{SMTP_PORT}. Check server firewall/connectivity.")
-        raise HTTPException(
-            status_code=status.HTTP_503_SERVICE_UNAVAILABLE, 
-            detail={"status": "error", "message": "Failed to send message: Could not connect to email server. (Check firewall)"}
+            status_code=status.HTTP_502_BAD_GATEWAY,
+            detail={"status": "error", "message": "Failed to send message: email provider request error."}
         )
     except Exception as e:
-        # Catch all other exceptions, including the "Network is unreachable" error
         print(f"An unexpected error occurred: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
