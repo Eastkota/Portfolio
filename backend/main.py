@@ -36,8 +36,8 @@ app.add_middleware(
 # Switched to Port 465 (SMTPS) for better compatibility with some hosts (like Render)
 YOUR_EMAIL_ACCOUNT = "dtenzin.nov@gmail.com"  # Your actual sender email
 YOUR_EMAIL_PASSWORD = "yhrv iivf sajq zpdl" # Your Gmail App Password
-SMTP_SERVER = "smtp.gmail.com"           
-SMTP_PORT = 587                          # SMTPS (SSL) port
+SMTP_SERVER = "smtp.gmail.com"
+SMTP_PORT = 465                          # SMTPS (SSL) port
 
 RECIPIENT_EMAIL = "dtenzin.nov@gmail.com" # The email address where messages will be sent
 # --------------------------
@@ -66,10 +66,8 @@ async def send_message(
         msg["To"] = RECIPIENT_EMAIL
         msg["Reply-To"] = email 
 
-        # Connect to the SMTP server using SMTPS (Port 465)
-        # We use smtplib.SMTP_SSL instead of smtplib.SMTP
+        # Connect to the SMTP server using SMTPS (SSL) on port 465.
         with smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT) as server:
-            server.starttls()
             server.login(YOUR_EMAIL_ACCOUNT, YOUR_EMAIL_PASSWORD)
             server.send_message(msg)
 
