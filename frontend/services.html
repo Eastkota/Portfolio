@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelance Services | Tenzin Dorji</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            color-scheme: dark;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            background: radial-gradient(circle at top left, rgba(59, 130, 246, 0.14), transparent 24%),
+                radial-gradient(circle at bottom right, rgba(139, 92, 246, 0.12), transparent 18%),
+                linear-gradient(180deg, #030712 0%, #0b1120 38%, #111827 100%);
+            color: #e2e8f0;
+        }
+
+        .glass-shell {
+            background: rgba(8, 15, 30, 0.82);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(148, 163, 184, 0.12);
+            box-shadow: 0 28px 80px rgba(15, 23, 42, 0.28);
+        }
+
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.88);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(148, 163, 184, 0.12);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #22d3ee, #8b5cf6);
+            color: #fff;
+            border: none;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.05);
+            box-shadow: 0 20px 35px rgba(56, 189, 248, 0.22);
+        }
+
+        .filter-pill {
+            transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease;
+        }
+
+        .filter-pill:hover {
+            transform: translateY(-1px);
+        }
+
+        .service-card {
+            background: rgba(15, 23, 42, 0.92);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 24px 60px rgba(15, 23, 42, 0.26);
+            transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(56, 189, 248, 0.55);
+            box-shadow: 0 34px 85px rgba(56, 189, 248, 0.14);
+        }
+
+        .service-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 1rem;
+            background: linear-gradient(135deg, rgba(34, 211, 238, 0.18), rgba(139, 92, 246, 0.18));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #67e8f9;
+        }
+
+        .text-gradient {
+            background: linear-gradient(90deg, #38bdf8, #8b5cf6, #f472b6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .animate-fade-up {
+            opacity: 0;
+            transform: translateY(18px);
+            animation: fadeUp 0.7s ease-out forwards;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body class="min-h-screen p-4 sm:p-8">
+
+    <div class="max-w-7xl mx-auto glass-shell rounded-[32px] overflow-hidden min-h-[80vh] border border-white/10">
+
+        <header class="bg-[radial-gradient(circle_at_top_left,_rgba(56,189,248,0.3),_transparent_35%),linear-gradient(90deg,_rgba(15,23,42,0.96),_rgba(15,23,42,0.96))] text-white p-5 sm:p-7 flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-0">
+            <div class="flex items-center gap-4">
+                <a href="index.html" class="inline-flex items-center justify-center w-12 h-12 rounded-3xl bg-white/10 text-white text-2xl shadow-lg shadow-cyan-500/10 transition hover:bg-white/15" title="Go back to main page">←</a>
+                <div>
+                    <p class="text-sm uppercase tracking-[0.25em] text-cyan-200/80 mb-2">Freelance Desk</p>
+                    <h1 class="text-3xl sm:text-4xl font-extrabold">Design, Documents &amp; G2C Services</h1>
+                </div>
+            </div>
+            <div class="text-right">
+                <p class="text-sm text-slate-300 mb-1">Work I take on outside of software projects.</p>
+                <p class="text-lg sm:text-xl font-semibold text-white"><span id="service-count">0</span> Services</p>
+            </div>
+        </header>
+
+        <section class="p-5 sm:p-8">
+
+            <div class="glass-panel rounded-[28px] border border-white/10 p-6 sm:p-7 mb-8 animate-fade-up">
+                <h2 class="text-2xl sm:text-3xl font-bold text-white mb-2">How can I help?</h2>
+                <p class="text-slate-300 text-sm sm:text-base max-w-3xl">
+                    Alongside development work, I help individuals and small businesses with branding, professional
+                    documents, and Government-to-Citizen (G2C) applications — from filling forms correctly to tracking
+                    them through to approval. Filter or search below, then send me a message with what you need.
+                </p>
+            </div>
+
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-8">
+                <div id="category-filters" class="flex flex-wrap gap-2">
+                    <button onclick="filterCategory('All', this)" data-category="All" class="filter-pill py-2 px-4 rounded-full text-sm bg-slate-800 text-slate-200">All</button>
+                    <button onclick="filterCategory('Design', this)" data-category="Design" class="filter-pill py-2 px-4 rounded-full text-sm bg-slate-800 text-slate-200">Design &amp; Branding</button>
+                    <button onclick="filterCategory('Documents', this)" data-category="Documents" class="filter-pill py-2 px-4 rounded-full text-sm bg-slate-800 text-slate-200">Documents</button>
+                    <button onclick="filterCategory('G2C', this)" data-category="G2C" class="filter-pill py-2 px-4 rounded-full text-sm bg-slate-800 text-slate-200">G2C Services</button>
+                </div>
+
+                <div class="relative w-full lg:w-80">
+                    <input
+                        type="search"
+                        id="service-search"
+                        placeholder="Search a service..."
+                        class="w-full px-4 py-3 rounded-2xl bg-slate-900/95 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 text-sm"
+                        oninput="renderServices()"
+                    >
+                </div>
+            </div>
+
+            <div id="service-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+            <p id="empty-state" class="hidden text-center text-slate-400 py-16">No services match your search. Try a different keyword.</p>
+
+            <div class="glass-panel rounded-[28px] border border-white/10 p-6 sm:p-8 mt-10 text-center">
+                <h3 class="text-2xl font-bold text-white mb-2">Need something not listed here?</h3>
+                <p class="text-slate-300 text-sm sm:text-base mb-6 max-w-2xl mx-auto">
+                    Most G2C applications and document work follow the same process. Tell me what you need and I will
+                    confirm the requirements, the timeline, and the cost before starting.
+                </p>
+                <a href="index.html#contact" class="btn-primary inline-flex items-center justify-center gap-2 rounded-full px-7 py-3 shadow-xl shadow-cyan-500/20 font-semibold">
+                    Request a Quote
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const ICONS = {
+            logo: '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4l2 3h8a2 2 0 012 2v9a4 4 0 01-4 4H7z"/><circle cx="12" cy="12" r="2.5" stroke-width="1.8"/></svg>',
+            resume: '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h6l6 6v10a2 2 0 01-2 2z"/></svg>',
+            doc: '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 7h8M8 11h8M8 15h5M6 3h12a1 1 0 011 1v16a1 1 0 01-1 1H6a1 1 0 01-1-1V4a1 1 0 011-1z"/></svg>',
+            passport: '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M5 4a1 1 0 011-1h12a1 1 0 011 1v16a1 1 0 01-1 1H6a1 1 0 01-1-1V4z"/><circle cx="12" cy="10" r="3" stroke-width="1.8"/><path stroke-linecap="round" stroke-width="1.8" d="M9 17h6"/></svg>',
+            shield: '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6l7-3z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9.5 12l1.8 1.8L15 10"/></svg>',
+            gov: '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 21h18M4 21V10m4 11V10m4 11V10m4 11V10m4 11V10M2 10l10-6 10 6"/></svg>',
+            print: '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M7 8V3h10v5M7 18H5a2 2 0 01-2-2v-4a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2h-2M7 15h10v6H7v-6z"/></svg>',
+            social: '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v10a1 1 0 01-1 1h-9l-5 4V5z"/></svg>',
+            data: '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="7" ry="3" stroke-width="1.8"/><path stroke-linecap="round" stroke-width="1.8" d="M5 6v12c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"/></svg>'
+        };
+
+        const services = [
+            {
+                id: 1,
+                name: 'Logo Design & Branding',
+                category: 'Design',
+                icon: 'logo',
+                summary: 'Original logo concepts for businesses, shops, and startups, delivered with the source files you actually own.',
+                deliverables: ['2–3 initial concepts', 'Unlimited minor revisions', 'PNG, JPG, SVG & PDF exports', 'Colour and mono versions'],
+                turnaround: '3–5 days'
+            },
+            {
+                id: 2,
+                name: 'Resume / CV Writing & Design',
+                category: 'Design',
+                icon: 'resume',
+                summary: 'A clean, recruiter-friendly resume that highlights your strengths — rewritten and typeset from scratch.',
+                deliverables: ['Content rewrite & proofreading', 'Modern one or two page layout', 'Editable DOCX + print-ready PDF', 'Cover letter on request'],
+                turnaround: '1–2 days'
+            },
+            {
+                id: 3,
+                name: 'Business Cards, Posters & Flyers',
+                category: 'Design',
+                icon: 'print',
+                summary: 'Print-ready marketing material for events, shops, and announcements — sized correctly the first time.',
+                deliverables: ['Custom layout & artwork', 'Print-ready PDF with bleed', 'Editable source file'],
+                turnaround: '2–3 days'
+            },
+            {
+                id: 4,
+                name: 'Social Media Graphics',
+                category: 'Design',
+                icon: 'social',
+                summary: 'Post and banner sets for Facebook, Instagram, and LinkedIn that stay consistent with your brand.',
+                deliverables: ['Platform-correct sizes', 'Reusable template pack', 'Editable source files'],
+                turnaround: '2–4 days'
+            },
+            {
+                id: 5,
+                name: 'Document Preparation & Formatting',
+                category: 'Documents',
+                icon: 'doc',
+                summary: 'Applications, letters, proposals, and reports written or reformatted to look professional and read clearly.',
+                deliverables: ['Drafting or rewriting', 'Consistent formatting & styles', 'Proofreading', 'Word + PDF delivery'],
+                turnaround: '1–3 days'
+            },
+            {
+                id: 6,
+                name: 'Typing, Scanning & Data Entry',
+                category: 'Documents',
+                icon: 'data',
+                summary: 'Handwritten or scanned material converted into clean, searchable digital documents and spreadsheets.',
+                deliverables: ['Accurate typing & transcription', 'Scanning and PDF merging', 'Excel / Google Sheets entry'],
+                turnaround: '1–3 days'
+            },
+            {
+                id: 7,
+                name: 'Passport Application Assistance',
+                category: 'G2C',
+                icon: 'passport',
+                summary: 'End-to-end help with new passport and renewal applications — forms, photos, uploads, and follow-up.',
+                deliverables: ['Document checklist upfront', 'Online form submission', 'Photo & scan requirements handled', 'Status follow-up until issued'],
+                turnaround: 'Depends on agency processing'
+            },
+            {
+                id: 8,
+                name: 'Security Clearance (SC) Application',
+                category: 'G2C',
+                icon: 'shield',
+                summary: 'Fresh Security Clearance and renewal applications submitted correctly so they are not rejected on a technicality.',
+                deliverables: ['Eligibility & document check', 'Online submission', 'Payment assistance', 'Follow-up until approval'],
+                turnaround: 'Depends on agency processing'
+            },
+            {
+                id: 9,
+                name: 'Other G2C Services',
+                category: 'G2C',
+                icon: 'gov',
+                summary: 'Census, civil registration, licences, and other citizen services — if it goes through a government portal, I can file it.',
+                deliverables: ['Census & citizenship documents', 'Birth, marriage & death registration', 'No Objection Certificate (NOC)', 'Licence & permit renewals', 'Land related applications'],
+                turnaround: 'Varies by service'
+            }
+        ];
+
+        let activeCategory = 'All';
+
+        function renderServices() {
+            const grid = document.getElementById('service-grid');
+            const query = document.getElementById('service-search').value.trim().toLowerCase();
+
+            const filtered = services.filter(service => {
+                const matchesCategory = activeCategory === 'All' || service.category === activeCategory;
+                const haystack = `${service.name} ${service.summary} ${service.deliverables.join(' ')}`.toLowerCase();
+                const matchesQuery = query === '' || haystack.includes(query);
+                return matchesCategory && matchesQuery;
+            });
+
+            grid.innerHTML = filtered.map((service, index) => `
+                <article class="service-card rounded-[28px] p-6 flex flex-col animate-fade-up" style="animation-delay: ${index * 60}ms">
+                    <div class="flex items-start justify-between gap-3 mb-4">
+                        <span class="service-icon">${ICONS[service.icon]}</span>
+                        <span class="text-[0.7rem] uppercase tracking-[0.18em] text-cyan-200 bg-cyan-500/10 px-3 py-1 rounded-full">${categoryLabel(service.category)}</span>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-white mb-2">${service.name}</h3>
+                    <p class="text-slate-300 text-sm mb-4">${service.summary}</p>
+
+                    <ul class="space-y-2 mb-5 text-sm text-slate-300">
+                        ${service.deliverables.map(item => `
+                            <li class="flex items-start gap-2">
+                                <span class="text-cyan-300 mt-[2px]">✓</span>
+                                <span>${item}</span>
+                            </li>
+                        `).join('')}
+                    </ul>
+
+                    <div class="mt-auto pt-4 border-t border-white/10 flex items-center justify-between gap-3">
+                        <span class="text-xs text-slate-400">Turnaround: <span class="text-slate-200">${service.turnaround}</span></span>
+                        <a href="index.html#contact" class="text-cyan-300 hover:text-cyan-200 text-sm font-medium transition-colors duration-300">Enquire →</a>
+                    </div>
+                </article>
+            `).join('');
+
+            document.getElementById('service-count').textContent = filtered.length;
+            document.getElementById('empty-state').classList.toggle('hidden', filtered.length > 0);
+        }
+
+        function categoryLabel(category) {
+            if (category === 'G2C') return 'G2C';
+            if (category === 'Design') return 'Design';
+            return 'Documents';
+        }
+
+        function filterCategory(category, button) {
+            activeCategory = category;
+
+            document.querySelectorAll('#category-filters button').forEach(btn => {
+                btn.classList.remove('bg-cyan-500', 'text-white');
+                btn.classList.add('bg-slate-800', 'text-slate-200');
+            });
+            button.classList.add('bg-cyan-500', 'text-white');
+            button.classList.remove('bg-slate-800', 'text-slate-200');
+
+            renderServices();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            filterCategory('All', document.querySelector('[data-category="All"]'));
+        });
+    </script>
+</body>
+
+</html>

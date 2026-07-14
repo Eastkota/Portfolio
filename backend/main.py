@@ -20,18 +20,29 @@ app = FastAPI()
 # Allows your Netlify frontend to communicate with this backend.
 origins = [
     "https://tenzindevelopment.netlify.app", # Your Netlify frontend URL
-    # Add other origins if needed for local testing:
-    # "http://localhost",
-    # "http://localhost:8000",
+    "http://localhost:5500",
+    "http://127.0.0.1:5500",
+    "http://localhost:8000",
 ]
+
+# Netlify deploy previews and branch deploys get their own subdomains,
+# e.g. deploy-preview-3--tenzindevelopment.netlify.app
+ORIGIN_REGEX = r"https://[a-z0-9-]+--tenzindevelopment\.netlify\.app"
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,          
-    allow_credentials=True,         
-    allow_methods=["*"],            
-    allow_headers=["*"],            
+    allow_origins=origins,
+    allow_origin_regex=ORIGIN_REGEX,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
+
+
+@app.get("/health/")
+async def health():
+    """Cheap endpoint the frontend pings to wake the service before a user submits."""
+    return {"status": "ok"}
 # --------------------------
 
 # --- SendGrid Configuration ---
@@ -40,6 +51,11 @@ SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
 SENDGRID_API_URL = "https://api.sendgrid.com/v3/mail/send"
 
 RECIPIENT_EMAIL = "dtenzin.nov@gmail.com" # The email address where messages will be sent
+
+# Every contact email carries this tag in its subject. The Gmail filter
+# ("Matches: subject:(PortfolioContact-9f2a) -> Never send it to Spam")
+# keys off it, so changing this string will send mail back to the spam folder.
+SUBJECT_TAG = "[PortfolioContact-9f2a]"
 # --------------------------
 
 @app.get("/debug-sendgrid/")
@@ -73,11 +89,14 @@ async def send_message(
                 detail={"status": "error", "message": "SendGrid API key is not configured."}
             )
 
+        # Mail sent through SendGrid but claiming to be from a gmail.com address cannot
+        # pass SPF/DKIM alignment, so Gmail files it as spam. SUBJECT_TAG is the stable
+        # anchor for the Gmail filter that overrides this — do not change it casually.
         payload = {
             "personalizations": [
                 {
                     "to": [{"email": RECIPIENT_EMAIL}],
-                    "subject": f"Portfolio Contact: Message from {name}"
+                    "subject": f"{SUBJECT_TAG} {name} <{email}>"
                 }
             ],
             "from": {"email": YOUR_EMAIL_ACCOUNT, "name": "Portfolio Contact"},

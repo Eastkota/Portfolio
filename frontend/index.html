@@ -239,8 +239,8 @@
             <ul id="main-nav" class="hidden md:flex space-x-4 lg:space-x-6">
                 <li><a href="#about" class="nav-link">About</a></li>
                 <li><a href="#projects" class="nav-link">Projects</a></li>
-                <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
+                <li><a href="services.html" class="nav-link">Services</a></li>
                 <li><a href="certificates.html" class="nav-link">Certificates</a></li>
             </ul>
         </nav>
@@ -692,40 +692,63 @@
             // provided by Render for your backend service.
             const backendApiUrl = 'https://portfolio-t1oz.onrender.com'; // Your Render backend URL
 
+            // The backend runs on Render's free tier, which sleeps after ~15 minutes idle.
+            // A cold request can 502 at Render's edge (no CORS headers, so it surfaces as a
+            // network error). Ping it on page load so it is awake by the time anyone submits.
+            fetch(`${backendApiUrl}/health/`, { mode: 'cors' }).catch(() => { });
+
             if (contactForm) { // Check if form exists
                 contactForm.addEventListener('submit', async function (e) {
                     e.preventDefault();
 
+                    const submitButton = contactForm.querySelector('button[type="submit"]');
+                    if (submitButton) submitButton.disabled = true;
+
                     formMessage.textContent = 'Sending message...';
                     formMessage.className = 'mt-4 text-sm font-medium text-gray-400';
 
-                    // 1. Revert to standard FormData (this matches FastAPI's Form(...) expectations)
+                    // Standard FormData — matches FastAPI's Form(...) expectations
                     const formData = new FormData(contactForm);
 
-                    try {
-                        // 2. Added the trailing slash back to exactly match your Python route
-                        const response = await fetch(`${backendApiUrl}/send-message/`, {
-                            method: 'POST',
-                            body: formData, // No JSON.stringify, no headers needed
-                        });
+                    // Retry once: a sleeping backend usually fails the first attempt and
+                    // succeeds on the second, once Render has finished waking it.
+                    const maxAttempts = 2;
 
-                        const result = await response.json();
+                    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+                        try {
+                            const response = await fetch(`${backendApiUrl}/send-message/`, {
+                                method: 'POST',
+                                body: formData, // No JSON.stringify, no headers needed
+                            });
 
-                        // 3. FastAPI sends errors inside a 'detail' object, let's handle that safely
-                        if (response.ok) {
-                            formMessage.textContent = result.message || 'Message sent successfully!';
-                            formMessage.className = 'mt-4 text-sm font-medium text-green-500';
-                            contactForm.reset();
-                        } else {
-                            const errorMsg = result.detail?.message || result.message || 'An error occurred.';
-                            formMessage.textContent = errorMsg;
-                            formMessage.className = 'mt-4 text-sm font-medium text-red-500';
+                            const result = await response.json();
+
+                            if (response.ok) {
+                                formMessage.textContent = result.message || 'Message sent successfully!';
+                                formMessage.className = 'mt-4 text-sm font-medium text-green-500';
+                                contactForm.reset();
+                            } else {
+                                // FastAPI nests error text inside a 'detail' object
+                                const errorMsg = result.detail?.message || result.message || 'An error occurred.';
+                                formMessage.textContent = errorMsg;
+                                formMessage.className = 'mt-4 text-sm font-medium text-red-500';
+                            }
+                            break;
+                        } catch (error) {
+                            console.error(`Error submitting form (attempt ${attempt}):`, error);
+
+                            if (attempt < maxAttempts) {
+                                formMessage.textContent = 'Waking up the server, one moment...';
+                                formMessage.className = 'mt-4 text-sm font-medium text-gray-400';
+                                await new Promise(resolve => setTimeout(resolve, 3000));
+                            } else {
+                                formMessage.textContent = 'Could not reach the server. Please email me directly at dtenzin.nov@gmail.com.';
+                                formMessage.className = 'mt-4 text-sm font-medium text-red-500';
+                            }
                         }
-                    } catch (error) {
-                        console.error('Error submitting form:', error);
-                        formMessage.textContent = 'Network error. Please try again later.';
-                        formMessage.className = 'mt-4 text-sm font-medium text-red-500';
                     }
+
+                    if (submitButton) submitButton.disabled = false;
                 });
             }
         });
